@@ -1,0 +1,54 @@
+{
+  "name": "dsh-meow",
+  "version": "0.1.0",
+  "description": "DSH web plugin: a synthesized meow sound when the harness needs confirmation, needs input, hits an error, or finishes a turn, with an enable/disable toggle in Settings.",
+  "type": "module",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "lib/client.js.map",
+    "cordis.patch.yml",
+    "src",
+    "scripts",
+    "assets",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "smoke": "node scripts/smoke-host.mjs && node scripts/smoke-client.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "immediately": true,
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-session": "^0.1.7-alpha.2",
+    "@deepseek-ai/dsh-user-approval": "^0.1.7-alpha.2",
+    "@deepseek-ai/dsh-user-questions": "^0.1.7-alpha.2"
+  },
+  "peerDependenciesMeta": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,6 @@
+node_modules/
+*.tsbuildinfo
+.DS_Store
+# NOTE: lib/ is committed on purpose - the plugin installs from a checkout or a
+# git URL without a build step, so the built host half and browser bundle ship
+# with the repo. Rebuild with: pnpm build

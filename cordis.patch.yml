@@ -1,0 +1,17 @@
+# dsh-meow bundle patch
+#
+# This file is the dsh.bundle.patch layer of the package: when installed
+# through the official CLI -
+#
+#   dsh plugin --profile web add link:/path/to/dsh_meow
+#
+# - the command appends dsh-meow to dsh.profile.bundles and the profile boot
+# merges THIS patch (an insert of the host row) like any manual
+# cordis.patch.yml mount line. The browser half ships via the package.json
+# dsh.client declaration and needs no separate roster row.
+
+# The host row. It owns the plugin state file and the /meow routes; the
+# browser half registers the Settings toggle and plays the sound.
+- insert:
+    - id: meow
+      name: 'dsh-meow'
