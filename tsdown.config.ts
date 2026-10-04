@@ -37,13 +37,15 @@ export default defineConfig([
     outDir: 'lib',
     format: ['esm'],
     platform: 'node',
-    target: 'es2022',
+    target: 'es2024',
     dts: false,
     clean: true,
     fixedExtension: false,
     // Host-half runtime imports resolve from the profile's node_modules
     // (the DSH packages are peer deps); node: builtins stay automatic.
-    external: (id: string) => id.startsWith('@deepseek-ai/'),
+    deps: {
+      neverBundle: (id: string) => id.startsWith('@deepseek-ai/'),
+    },
   },
   {
     name: CLIENT_ID + '/client',
@@ -51,6 +53,7 @@ export default defineConfig([
     outDir: 'lib',
     format: 'cjs',
     platform: 'browser',
+    target: 'es2024',
     dts: false,
     clean: false,
     sourcemap: true,
@@ -60,8 +63,10 @@ export default defineConfig([
       'import.meta.env': JSON.stringify({ MODE: process.env.NODE_ENV ?? 'production' }),
     },
     // Platform-table words stay external; everything else inlines.
-    external: (id: string) => PLATFORM_MODULES.includes(id),
-    noExternal: (id: string) => (PLATFORM_MODULES.includes(id) ? undefined : true),
+    deps: {
+      neverBundle: (id: string) => PLATFORM_MODULES.includes(id),
+      alwaysBundle: (id: string) => !PLATFORM_MODULES.includes(id),
+    },
     outputOptions: {
       entryFileNames: 'client.js',
       banner: 'window.__ModuleLoader__.load({ id: ' + JSON.stringify(CLIENT_ID) + ', factory: (require) => {',

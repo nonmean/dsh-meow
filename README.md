@@ -9,11 +9,16 @@ Audio API, so there is nothing to download and no binary asset to trust.
 
 ## Compatibility
 
-Built and verified against **DeepSeek Harness 0.1.7-alpha.2** with Cordis
-4.0.4 on macOS and Node 24. It uses only published extension points — the
-approval/request and user-questions/request waterfalls, session/event, the
+Built and verified against **DeepSeek Harness 0.2.1-alpha.1** with Cordis
+4.0.5-alpha.1 on macOS and Node 24. It uses only published extension points —
+the approval/request and user-questions/request waterfalls, session/event, the
 webServer route registry, the slot registry, and the dsh.client bundle
-format — so it should keep working across patch releases.
+format.
+
+The `@deepseek-ai/dsh-*` `peerDependencies` and `engines.dsh` ranges name the
+DSH line this build targets. DSH 0.2 added a boot-time compatibility preflight
+that disables any bundle whose DSH peer ranges do not satisfy the running
+version, so keep those ranges in step with the DSH version you run.
 
 ## The four moments
 
@@ -115,3 +120,12 @@ plugin installs from a checkout or a git URL without a build step.
 | Settings row missing | Restart dsh web and hard-refresh; confirm the bundle is in the web profile's dsh.profile.bundles. |
 | Meows too often | Turn off individual moments, or keep Include subagent sessions off. |
 | Meows on every tool error | The plugin only meows on a turn that ends in error, not on recoverable tool errors; if a turn ends in error repeatedly, that is the signal. |
+
+## Version history
+
+- **0.2.0** — retargeted to DeepSeek Harness 0.2.1-alpha.1 and Cordis
+  4.0.5-alpha.1. The `@deepseek-ai/dsh-*` `peerDependencies` and
+  `engines.dsh` now satisfy the DSH 0.2 compatibility preflight (the earlier
+  ranges made the launcher skip the bundle), and the build uses tsdown's
+  `deps` API. Rebuilt artifacts are byte-identical.
+- **0.1.0** — initial release for DeepSeek Harness 0.1.7-alpha.2.
